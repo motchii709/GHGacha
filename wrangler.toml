@@ -1,0 +1,7 @@
+name = "ghgacha"
+compatibility_date = "2025-04-01"
+pages_build_output_dir = "dist"
+
+[[kv_namespaces]]
+binding = "GHGACHA_CACHE"
+id = "aa3d1901d7324d45a4cf9fdab85e378a"
