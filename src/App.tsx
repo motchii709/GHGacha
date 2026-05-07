@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { LanguageSelector } from "./components/LanguageSelector";
 import { GachaMachine } from "./components/GachaMachine";
 import { PullHistory } from "./components/PullHistory";
@@ -8,56 +9,97 @@ import "./styles/gacha.css";
 
 type Tab = "gacha" | "history" | "favorites";
 
+const TAB_LABELS: Record<Tab, { label: string; icon: string }> = {
+  gacha: { label: "GACHA", icon: "🎯" },
+  history: { label: "HISTORY", icon: "📋" },
+  favorites: { label: "FAVORITES", icon: "★" },
+};
+
 function App() {
   const [language, setLanguage] = useState("TypeScript");
   const [tab, setTab] = useState<Tab>("gacha");
 
   return (
-    <div style={{ minHeight: "100vh", background: "#0f0f23" }}>
+    <div style={{ minHeight: "100vh", paddingBottom: "40px" }}>
       <header
         style={{
           textAlign: "center",
-          padding: "24px 16px 8px",
-          borderBottom: "1px solid #1a1a2e",
+          padding: "32px 16px 12px",
+          position: "relative",
         }}
       >
-        <h1 style={{ fontSize: "28px", fontWeight: 800, background: "linear-gradient(135deg, #667eea, #764ba2)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-          GHGacha
-        </h1>
-        <p style={{ color: "#666", fontSize: "13px", marginTop: "4px" }}>
-          GitHub Repository Gacha
-        </p>
+        <motion.h1
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          style={{
+            fontFamily: "var(--font-display)",
+            fontSize: "clamp(28px, 6vw, 42px)",
+            fontWeight: 400,
+            letterSpacing: "0.15em",
+            background: "linear-gradient(135deg, #00f0ff 0%, #b44dff 50%, #ff2d78 100%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            textShadow: "none",
+            filter: "drop-shadow(0 0 30px rgba(0, 240, 255, 0.15))",
+          }}
+        >
+          GHGACHA
+        </motion.h1>
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2 }}
+          style={{
+            fontFamily: "var(--font-display)",
+            fontSize: "11px",
+            color: "var(--text-muted)",
+            letterSpacing: "0.3em",
+            marginTop: "6px",
+          }}
+        >
+          GITHUB REPOSITORY GACHA
+        </motion.p>
       </header>
 
       <LanguageSelector selected={language} onSelect={setLanguage} />
 
-      <nav style={{ display: "flex", justifyContent: "center", gap: "4px", padding: "0 16px" }}>
-        {(["gacha", "history", "favorites"] as Tab[]).map((t) => (
+      <nav
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          gap: "2px",
+          padding: "8px 16px 0",
+          borderBottom: "1px solid #1a1a2e",
+          maxWidth: "500px",
+          margin: "0 auto",
+        }}
+      >
+        {(Object.entries(TAB_LABELS) as [Tab, { label: string; icon: string }][]).map(([key, val]) => (
           <button
-            key={t}
-            onClick={() => setTab(t)}
-            style={{
-              padding: "8px 20px",
-              border: "none",
-              borderBottom: tab === t ? "2px solid #667eea" : "2px solid transparent",
-              background: "none",
-              color: tab === t ? "#e0e0f0" : "#666",
-              cursor: "pointer",
-              fontSize: "14px",
-              fontWeight: tab === t ? 700 : 400,
-              transition: "all 0.2s",
-              textTransform: "capitalize",
-            }}
+            key={key}
+            onClick={() => setTab(key)}
+            className={`nav-tab ${tab === key ? "active" : ""}`}
           >
-            {t === "gacha" ? "🎰 Gacha" : t === "history" ? "📜 History" : "⭐ Favorites"}
+            <span style={{ marginRight: "6px", fontSize: "13px" }}>{val.icon}</span>
+            {val.label}
           </button>
         ))}
       </nav>
 
-      <main style={{ maxWidth: "800px", margin: "0 auto", padding: "16px" }}>
-        {tab === "gacha" && <GachaMachine language={language} />}
-        {tab === "history" && <PullHistory />}
-        {tab === "favorites" && <Favorites />}
+      <main style={{ maxWidth: "640px", margin: "0 auto", padding: "20px 16px" }}>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={tab}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.2 }}
+          >
+            {tab === "gacha" && <GachaMachine language={language} />}
+            {tab === "history" && <PullHistory />}
+            {tab === "favorites" && <Favorites />}
+          </motion.div>
+        </AnimatePresence>
       </main>
     </div>
   );

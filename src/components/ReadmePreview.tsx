@@ -1,12 +1,14 @@
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { fetchRepoDetail } from "../services/api";
 
 interface Props {
   owner: string;
   name: string;
+  rarityColor: string;
 }
 
-export function ReadmePreview({ owner, name }: Props) {
+export function ReadmePreview({ owner, name, rarityColor }: Props) {
   const [open, setOpen] = useState(false);
   const [readme, setReadme] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -35,43 +37,61 @@ export function ReadmePreview({ owner, name }: Props) {
 
   return (
     <div>
-      <button
+      <motion.button
         onClick={toggle}
+        whileHover={{ scale: 1.01 }}
+        whileTap={{ scale: 0.99 }}
         style={{
-          background: "none",
-          border: "1px solid #444",
-          borderRadius: "8px",
-          padding: "8px 16px",
-          color: "#a0a0b8",
-          cursor: "pointer",
-          fontSize: "13px",
           width: "100%",
+          padding: "10px 14px",
+          borderRadius: "var(--radius-sm)",
+          background: "rgba(0,0,0,0.2)",
+          border: `1px solid ${rarityColor}22`,
+          color: "var(--text-secondary)",
+          cursor: "pointer",
+          fontSize: "12px",
+          fontFamily: "var(--font-body)",
+          transition: "border-color 0.2s",
         }}
       >
-        {loading ? "Loading README..." : open ? "Hide README" : "Show README Preview"}
-      </button>
-      {open && readme && (
-        <pre
-          style={{
-            marginTop: "8px",
-            padding: "12px",
-            borderRadius: "8px",
-            background: "#111122",
-            color: "#c0c0d8",
-            fontSize: "12px",
-            lineHeight: 1.5,
-            maxHeight: "300px",
-            overflow: "auto",
-            whiteSpace: "pre-wrap",
-            wordBreak: "break-word",
-          }}
-        >
-          {readme}
-        </pre>
-      )}
-      {open && !readme && !loading && (
-        <p style={{ color: "#666", fontSize: "13px", marginTop: "8px" }}>No README available</p>
-      )}
+        {loading ? "LOADING README..." : open ? "HIDE README" : "SHOW README PREVIEW"}
+      </motion.button>
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            style={{ overflow: "hidden" }}
+          >
+            {readme ? (
+              <pre
+                style={{
+                  marginTop: "8px",
+                  padding: "14px",
+                  borderRadius: "var(--radius-sm)",
+                  background: "rgba(0,0,0,0.25)",
+                  color: "var(--text-secondary)",
+                  fontSize: "12px",
+                  lineHeight: 1.6,
+                  maxHeight: "260px",
+                  overflow: "auto",
+                  whiteSpace: "pre-wrap",
+                  wordBreak: "break-word",
+                  border: `1px solid ${rarityColor}11`,
+                }}
+              >
+                {readme}
+              </pre>
+            ) : (
+              <p style={{ color: "var(--text-muted)", fontSize: "12px", marginTop: "8px", textAlign: "center" }}>
+                No README available
+              </p>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

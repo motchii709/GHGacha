@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { LANGUAGES } from "../types";
 
 interface Props {
@@ -7,29 +8,49 @@ interface Props {
 
 export function LanguageSelector({ selected, onSelect }: Props) {
   return (
-    <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", justifyContent: "center", padding: "16px" }}>
-      {LANGUAGES.map((lang) => (
-        <button
+    <div
+      style={{
+        display: "flex",
+        flexWrap: "wrap",
+        gap: "6px",
+        justifyContent: "center",
+        padding: "12px 16px 8px",
+        maxWidth: "720px",
+        margin: "0 auto",
+      }}
+    >
+      {LANGUAGES.map((lang, i) => (
+        <motion.button
           key={lang.name}
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: i * 0.03, duration: 0.3 }}
           onClick={() => onSelect(lang.name)}
+          className={`language-chip ${selected === lang.name ? "active" : ""}`}
           style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "6px",
-            padding: "10px 16px",
-            border: selected === lang.name ? `2px solid ${lang.color}` : "2px solid transparent",
-            borderRadius: "12px",
-            background: selected === lang.name ? `${lang.color}22` : "#1a1a2e",
-            color: selected === lang.name ? lang.color : "#a0a0b8",
-            cursor: "pointer",
-            fontSize: "14px",
-            fontWeight: selected === lang.name ? 700 : 400,
-            transition: "all 0.2s",
+            color: selected === lang.name ? lang.color : undefined,
+            borderColor: selected === lang.name ? `${lang.color}66` : undefined,
           }}
         >
-          <span style={{ fontSize: "18px" }}>{lang.icon}</span>
+          <span
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: "24px",
+              height: "24px",
+              borderRadius: "6px",
+              background: `${lang.color}22`,
+              color: lang.color,
+              fontSize: "10px",
+              fontWeight: 700,
+              fontFamily: "var(--font-display)",
+            }}
+          >
+            {lang.icon}
+          </span>
           {lang.name}
-        </button>
+        </motion.button>
       ))}
     </div>
   );
