@@ -36,11 +36,11 @@ function App() {
             fontSize: "clamp(28px, 6vw, 42px)",
             fontWeight: 400,
             letterSpacing: "0.15em",
-            background: "linear-gradient(135deg, #00f0ff 0%, #b44dff 50%, #ff2d78 100%)",
+            background: "linear-gradient(135deg, #0066ff 0%, #7c3aed 50%, #ff2d78 100%)",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
             textShadow: "none",
-            filter: "drop-shadow(0 0 30px rgba(0, 240, 255, 0.15))",
+            filter: "drop-shadow(0 0 20px rgba(0, 102, 255, 0.12))",
           }}
         >
           GHGACHA
@@ -69,7 +69,7 @@ function App() {
           justifyContent: "center",
           gap: "2px",
           padding: "8px 16px 0",
-          borderBottom: "1px solid #1a1a2e",
+          borderBottom: "1px solid #e8e8f0",
           maxWidth: "500px",
           margin: "0 auto",
         }}

@@ -22,7 +22,7 @@ export function ResultCard({ repo, rarity, isFavorite, onToggleFavorite }: Props
         width: "100%",
         margin: "0 auto",
         borderRadius: "var(--radius-lg)",
-        background: `linear-gradient(145deg, #16162e 0%, #1e1e3a 100%)`,
+        background: `linear-gradient(145deg, #ffffff 0%, #f8f8fc 100%)`,
         border: `1px solid ${c.color}33`,
       }}
     >
@@ -93,8 +93,8 @@ export function ResultCard({ repo, rarity, isFavorite, onToggleFavorite }: Props
               marginBottom: "18px",
               padding: "12px 14px",
               borderRadius: "var(--radius-sm)",
-              background: "rgba(0,0,0,0.2)",
-              borderLeft: `2px solid ${c.color}44`,
+background: "rgba(0,0,0,0.02)",
+            borderLeft: `2px solid ${c.color}66`,
             }}
           >
             {repo.description}
@@ -108,7 +108,7 @@ export function ResultCard({ repo, rarity, isFavorite, onToggleFavorite }: Props
             marginBottom: "16px",
             padding: "12px 14px",
             borderRadius: "var(--radius-sm)",
-            background: "rgba(0,0,0,0.15)",
+            background: "rgba(0,0,0,0.02)",
           }}
         >
           {[

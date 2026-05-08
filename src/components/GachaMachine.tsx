@@ -168,7 +168,7 @@ export function GachaMachine({ language }: Props) {
               justifyContent: "center",
               fontFamily: "var(--font-display)",
               fontSize: "10px",
-              color: "#fff",
+              color: "#1a1a2e",
               letterSpacing: "0.05em",
             }}
           >
@@ -185,9 +185,9 @@ export function GachaMachine({ language }: Props) {
               marginTop: "16px",
               padding: "12px 20px",
               borderRadius: "var(--radius-md)",
-              background: "#2a0a0a",
+              background: "#fff0f0",
               border: "1px solid #ff2d7844",
-              color: "#ff6b8a",
+              color: "#d63031",
               fontSize: "13px",
               textAlign: "center",
             }}
