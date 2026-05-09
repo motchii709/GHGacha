@@ -9,92 +9,41 @@ import "./styles/gacha.css";
 
 type Tab = "gacha" | "history" | "favorites";
 
-const TAB_LABELS: Record<Tab, { label: string; icon: string }> = {
-  gacha: { label: "GACHA", icon: "🎯" },
-  history: { label: "HISTORY", icon: "📋" },
-  favorites: { label: "FAVORITES", icon: "★" },
-};
+const TABS: { key: Tab; label: string; icon: string }[] = [
+  { key: "gacha", label: "GACHA", icon: "✦" },
+  { key: "history", label: "HISTORY", icon: "📋" },
+  { key: "favorites", label: "FAVORITES", icon: "★" },
+];
 
 function App() {
   const [language, setLanguage] = useState("TypeScript");
   const [tab, setTab] = useState<Tab>("gacha");
 
   return (
-    <div style={{ minHeight: "100vh", paddingBottom: "40px" }}>
-      <header
-        style={{
-          textAlign: "center",
-          padding: "32px 16px 12px",
-          position: "relative",
-        }}
-      >
-        <motion.h1
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          style={{
-            fontFamily: "var(--font-display)",
-            fontSize: "clamp(28px, 6vw, 42px)",
-            fontWeight: 400,
-            letterSpacing: "0.15em",
-            background: "linear-gradient(135deg, #0066ff 0%, #7c3aed 50%, #ff2d78 100%)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            textShadow: "none",
-            filter: "drop-shadow(0 0 20px rgba(0, 102, 255, 0.12))",
-          }}
-        >
+    <div style={{ minHeight: "100vh", background: "var(--bg)", paddingBottom: 32 }}>
+      <div style={{ padding: "28px 20px 12px", textAlign: "center" }}>
+        <h1 style={{ fontFamily: "var(--font-display)", fontSize: 26, fontWeight: 400, letterSpacing: "0.12em", color: "var(--text)" }}>
           GHGACHA
-        </motion.h1>
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
-          style={{
-            fontFamily: "var(--font-display)",
-            fontSize: "11px",
-            color: "var(--text-muted)",
-            letterSpacing: "0.3em",
-            marginTop: "6px",
-          }}
-        >
+        </h1>
+        <p style={{ fontFamily: "var(--font-display)", fontSize: 9, color: "var(--text-muted)", letterSpacing: "0.25em", marginTop: 4 }}>
           GITHUB REPOSITORY GACHA
-        </motion.p>
-      </header>
+        </p>
+      </div>
 
       <LanguageSelector selected={language} onSelect={setLanguage} />
 
-      <nav
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          gap: "2px",
-          padding: "8px 16px 0",
-          borderBottom: "1px solid #e8e8f0",
-          maxWidth: "500px",
-          margin: "0 auto",
-        }}
-      >
-        {(Object.entries(TAB_LABELS) as [Tab, { label: string; icon: string }][]).map(([key, val]) => (
-          <button
-            key={key}
-            onClick={() => setTab(key)}
-            className={`nav-tab ${tab === key ? "active" : ""}`}
-          >
-            <span style={{ marginRight: "6px", fontSize: "13px" }}>{val.icon}</span>
-            {val.label}
+      <div style={{ display: "flex", justifyContent: "center", gap: 2, padding: "4px 20px 0", borderBottom: "1px solid #eeeef4", margin: "0 20px" }}>
+        {TABS.map((t) => (
+          <button key={t.key} onClick={() => setTab(t.key)} className={`nav-btn ${tab === t.key ? "active" : ""}`}>
+            <span style={{ marginRight: 4 }}>{t.icon}</span>
+            {t.label}
           </button>
         ))}
-      </nav>
+      </div>
 
-      <main style={{ maxWidth: "640px", margin: "0 auto", padding: "20px 16px" }}>
+      <main style={{ padding: "20px 20px" }}>
         <AnimatePresence mode="wait">
-          <motion.div
-            key={tab}
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.2 }}
-          >
+          <motion.div key={tab} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.15 }}>
             {tab === "gacha" && <GachaMachine language={language} />}
             {tab === "history" && <PullHistory />}
             {tab === "favorites" && <Favorites />}
